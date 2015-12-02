@@ -1,0 +1,127 @@
+  if(doc) {console.log("Document "+ docData.name + "exists");
+      resolve("doc exists already");}
+      else{
+        docData.Roles = accessroles;
+        Documents.create(docData,{include:[Roles]}).then(function(doc){
+          
+        }).catch(function(err) {
+          console.log("Error assigning doc to ", role, err);
+          reject(Error(err));
+        });}
+      }).catch(function (err) {
+        
+      });
+
+      var users = require("./../model/Users");
+var documents = require("./../model/Documents");
+var roles = require("./../model/Roles");
+
+exports.createDocument = function(docData) {
+  var accessroles = docData.access.split(",");
+  delete docData.access;
+  return new Promise(function(resolve, reject) {
+    documents.findOne({
+      where: {
+        documentName: docData.documentName
+      }
+    }).then(function(doc) {
+      if (doc) {
+        resolve("Document " + docData.documentName + " exists");
+      } else {
+
+        documents.create(docData).then(function(doc) {
+          console.log("Created", doc);
+          accessroles.forEach(function(_role, index) {
+            roles.findOrCreate({
+              where: {
+                rolename: _role.trim()
+              }
+            }).then(function(role) {
+              doc.addRole(_role).then(function() {
+                console.log("Added:", _role);
+                if (index === accessroles.length - 1) {
+                  doc.getRoles({}).then(function (s) {
+                    console.log(s);
+                  })
+                  resolve(doc, accessroles);
+                }
+              }).catch(function(err) {
+                console.log("Error adding:", _role);
+                reject(Error(err));
+              });
+            }).catch(function(err) {
+              console.log("Error :", role);
+              reject(Error(err));
+            });
+          });
+        }).catch(function(err) {
+          console.log("Could not create", docData.documentName);
+          reject(Error(err));
+        });
+      }
+    }).catch(function(err) {
+      console.log("Error verifying", docData.documentName, err);
+      reject(Error(err));
+    });
+  });
+};
+
+exports.getAllDocuments = function(limit) {
+  var query = {};
+  if (limit) query.limit = limit;
+  return new Promise(function(resolve, reject) {
+    documents.findAll(query).then(function(docs) {
+      resolve(docs);
+    }).catch(function(err) {
+      console.log("Error finding documents", err);
+      reject(Error(err));
+    });
+  });
+};
+
+exports.getAllDocumentsByRole = function(limit, role) {
+  var query = {
+    include: [{
+      model: roles,
+      where: {
+        rolename: role
+      }
+    }],
+    order: [
+      ['dateCreated', 'ASC']
+    ]
+  };
+  if (limit) query.limit = limit;
+  return new Promise(function(resolve, reject) {
+    documents.findAll(query).then(function(docs) {
+      resolve(docs);
+      baba
+    }).catch(function(err) {
+      console.log("Error finding documents", err);
+      reject(Error(err));
+    });
+  });
+};
+
+
+// exports.getAllDocumentsByDate = function(limit, date) {
+//   var query = {
+//     include: [{
+//       model: roles,
+//       where: {
+//         dateCreated: role
+//       }
+//     }],
+//     order: [
+//     ['dateCreated', 'ASC'],
+//   };
+//   if (limit) query.limit = limit;
+//   return new Promise(function(resolve, reject) {
+//     documents.findAll(query).then(function(docs) {
+//       resolve(docs);
+//     }).catch(function(err) {
+//       console.log("Error finding documents", err);
+//       reject(Error(err));
+//     });
+//   });
+// };

@@ -1,0 +1,34 @@
+{
+  "name": "dms-sequelize",
+  "version": "1.0.0",
+  "description": "manages document, user and access rights",
+  "main": "index.js",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "lodash": "^3.10.1",
+    "mysql": "^2.9.0",
+    "pg": "^4.4.3",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.13.0"
+  },
+  "devDependencies": {
+    "jasmine-node": "^1.14.5"
+  },
+  "scripts": {
+    "start": "server.js",
+    "test": "jasmine-node --spec"
+  },
+  "engines": {
+    "node": ">=0.10"
+  },
+  "preferGlobal": "true",
+  "bin": {
+    "dms_s": "./bin/dms_seq.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "hthttps://github.com/andela-eakinyele/dms-sequelize.git"
+  },
+  "author": "emmanuel akinyele",
+  "license": "MIT"
+}
