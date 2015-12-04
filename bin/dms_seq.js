@@ -120,7 +120,6 @@ authSyncModels.runner().then(function() {
         args[2] = args[1];
         args[1] = undefined;
       }
-      console.log(args);
       useFunc[0](args[1], args[2]).then(function(result) {
         if (result.length === 0) {
           console.log("No data");

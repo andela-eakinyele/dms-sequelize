@@ -171,25 +171,18 @@ exports.getAllDocumentsByRole = function(limit, role) {
 }
 
 exports.getAllDocumentsByDate = function(limit, date) {
-  var startDate = new Date(date);
-  var end = (new Date(date)).setDate(startDate.getDate() + 1);
-  var endDate = new Date(end);
-  // console.log(useDate);
   var query = {
     where: {
-      createdAt: {
-        $lt: new Date(),
-        $gt: new Date(new Date() - 24 * 60 * 60 * 1000)
+      dateCreated: {
+        $lt: new Date(date),
+        $gt: new Date(new Date(date) - 24 * 60 * 60 * 1000)
       }
     }
   };
   if (limit) query.limit = limit;
   return new Promise(function(resolve, reject) {
     documents.findAll(query).then(function(docs) {
-      resolve(_.filter(docs, function(doc) {
-        console.log(_.keys(JSON.stringify(doc)));
-        return JSON.stringify(doc).dateCreated === useDate;
-      }));
+      resolve(docs);
     }).catch(function(err) {
       console.log("Error finding documents", err);
       reject(Error(err));
