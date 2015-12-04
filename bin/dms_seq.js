@@ -25,9 +25,6 @@ program
 
 var args = program.args;
 
-// console.log(/^getAll\w+(By)/.test(args[0]));
-// console.log(/^getAll\w+^[(?:By)]/.test(args[0]));
-
 if (!args.length) {
   program.outputHelp();
   process.exit(1);

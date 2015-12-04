@@ -35,11 +35,18 @@ var Document = sequelize.define("Document", {
     dateCreated: function() {
       var useDate = this.getDataValue('dateCreated');
       return new Date(useDate).toDateString();
+    },
+    lastModified: function() {
+      var useDate = this.getDataValue('lastModified');
+      return new Date(useDate).toDateString();
     }
   },
   setterMethods: {
     createdAt: function(val) {
       this.setDataValue('createdAt', new Date(val).toDateString());
+    },
+     lastModified: function(val) {
+      this.setDataValue('lastModified', new Date(val).toDateString());
     }
   }
 });

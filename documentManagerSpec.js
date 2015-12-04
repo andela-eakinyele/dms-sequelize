@@ -10,7 +10,11 @@ function docMock(cb) {
 }
 describe('Users', function() {
   it('User created is unique', function() {
-    expect(user.unique()).toBeTruthy();
+    expect(user1).toBeTruthy();
+    expect(user2).toBeFalsy();
+    expect(count).tobe(2)
+
+
   });
   it('User has a role defined', function() {
     expect(user.role).toBeDefined;
