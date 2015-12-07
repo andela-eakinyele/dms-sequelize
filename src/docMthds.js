@@ -12,7 +12,7 @@ function verifyorCreateData(model, findargs, cargs) {
         resolve([result, false]);
       } else {
         model.create(cargs).then(function(result) {
-          console.log("Created", cargs);
+          // console.log("Created", cargs);
           resolve([result, true]);
         }).catch(function(err) {
           console.log("Error creating", cargs, err);
@@ -79,13 +79,13 @@ exports.createDocument = function(docData) {
             if (result[1]) createdRoles.push(_role);
             // add document to role relation
             result[0].addDocument(doc).then(function() {
-              console.log("Added", docData.documentName, "to", _role);
+              // console.log("Added", docData.documentName, "to", _role);
               // check if all role populated
               if (index === accessroles.length - 1) {
                 // then populate document with roles
                 doc.addRoles(accessroles).then(function() {
-                  console.log("Added ", accessroles, "to", docData.documentName);
-                  resolve(doc.dataValues, accessroles);
+                  // console.log("Added ", accessroles, "to", docData.documentName);
+                  resolve(doc);
                 }).catch(function(err) { // delete document and created roles if error encountered with docAddRoles
                   console.log("Error adding accessroles", err);
                   destroyData(createdRoles, docData, function(_err, done) {
@@ -98,8 +98,10 @@ exports.createDocument = function(docData) {
             }).catch(function(err) { // delete document and created roles if error encountered with roleAddDoc
               console.log("Error adding doc to", _role, err);
               destroyData(createdRoles, docData, function(_err, done) {
-                if (_err) reject(Error(_err));
-                console.log("CreateDocument not Successful, Cleanup Done");
+                if (_err) {
+                  console.log("CreateDocument not Successful, Cleanup Done");
+                  reject(Error(_err));
+                }
                 reject(Error(err));
               });
             });
@@ -110,7 +112,7 @@ exports.createDocument = function(docData) {
           });
         });
       }
-      // throw error encountered during create of find document
+      // throw error encountered during create or find document
     }).catch(function(err) {
       console.log(err);
       reject(Error(err));
@@ -160,11 +162,13 @@ exports.getAllDocumentsByRole = function(limit, role) {
               resolve(validRoleDocs);
             }
           }).catch(function(err) {
-            console.log("Error finding documents for role", role, err);
+            // console.log("Error finding documents for role", role, err);
+            reject(Error(err));
           });
         }
       }).catch(function(err) {
         console.log("Error finding", role, err);
+            reject(Error(err));
       });
     });
   });
@@ -177,7 +181,10 @@ exports.getAllDocumentsByDate = function(limit, date) {
         $lt: new Date(date),
         $gt: new Date(new Date(date) - 24 * 60 * 60 * 1000)
       }
-    }
+    },
+    order: [
+      ['dateCreated', 'ASC']
+    ]
   };
   if (limit) query.limit = limit;
   return new Promise(function(resolve, reject) {

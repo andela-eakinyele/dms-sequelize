@@ -25,7 +25,7 @@ exports.createUser = function(userdata) {
             resolve("Role does not exist - ", userdata.rolename);
           }
           users.create(userdata).then(function(user) {
-            console.log("User created");
+            // console.log("User created");
             resolve(user);
           }).catch(function(err) {
             console.log("Error creating user", err);

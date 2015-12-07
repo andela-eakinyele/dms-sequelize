@@ -4,6 +4,7 @@ var program = require('commander');
 var _ = require("lodash");
 var fs = require("fs");
 
+
 var userData = ["firstname", "lastname", "username", "password", "rolename", "email"];
 var docData = ["userid", "documentName", "title", "content", "access"];
 var roleData = ["rolename"];

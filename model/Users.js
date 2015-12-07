@@ -27,7 +27,6 @@ var Users = sequelize.define("Users", {
   userid: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
-    default :100,
     primaryKey: true,
     allowNull: false,
     validate: {
