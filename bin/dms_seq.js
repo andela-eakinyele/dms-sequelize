@@ -4,17 +4,10 @@ var program = require('commander');
 var _ = require("lodash");
 var fs = require("fs");
 
-
-var authSyncModels = require("./../src/dbsync");
-var userFunc = require("./../src/userMthds");
-var roleFunc = require("./../src/roleMthds");
-var docFunc = require("./../src/docMthds");
-var helpFunc = require("./../src/helpfunc");
-
 var userData = ["firstname", "lastname", "username", "password", "rolename", "email"];
 var docData = ["userid", "documentName", "title", "content", "access"];
 var roleData = ["rolename"];
-var arrModelFunc = [userFunc, docFunc, roleFunc];
+var arrModelFunc = require("./../documentManager");
 var data = [userData, docData, roleData];
 
 program
@@ -44,7 +37,7 @@ var readdata = function(file) {
   var _read = fs.readFileSync(file, 'utf8');
   return _read.split("\n");
 };
-authSyncModels.runner().then(function() {
+authSyncModels(false).then(function() {
 
   var useFunc = getModelFunc(args[0]);
   if (typeof useFunc[0] !== "function") {

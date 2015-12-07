@@ -1,0 +1,24 @@
+{
+  "testUsers": {
+    "user1": ["Edwin", "Abbott", "EAbbott", "eabbott", "Admin", "eabbott@write.com"],
+    "user2": ["Douglas", "Adams", "DAdams", "dadams", "Scientist", "dadams@science.com"],
+    "user3": ["Humayun", "Ahmed", "HAhmed", "hahmed", "Writer", "hahmed@write.com"]
+  },
+  "duplicateUsers": {
+    "user3_uniqueTest": ["Humayun", "Ahmed", "HAhmed1", "hahmed", "Writer", "hahmed@write.com"],
+    "user3_uniqueTest2": ["Humayun", "Ahmed", "HAhmed", "hahmed", "Writer", "hahmed1@write.com"],
+    "user_invalidRole": ["John", "Craig", "JCraig", "jcraig", "Fixer", "jcraig@science.com"]
+  },
+  "testDocs": {
+    "doc1": [1, "Lorems", "Lorem Ipsum", "Who knows the whole words....", "Writer, Scientist"],
+    "doc2": [1, "Staples", "Staple Foods", "These are classes of group...", "Writer, Scientist"],
+    "doc3": [1, "Techie", "Life of a developer", "We can'ts stand bugs, we write and kill...", "Writer"],
+    "doc4": [2, "Clothes", "Winter is coming", "John Snow likes to say, winter is coming...", "Writer, Scientist"],
+    "doc5": [2, "Techie", "Life of a developer", "We can'ts stand bugs, we write and kill...", "Scientist"],
+    "doc6": [3, "Hardware", "Memory, Processing and Crunching", "I have no Idea what an IC Chip does...", "Writer, Scientist"]
+  },
+  "duplicateDocs": {
+    "doc_uniqueTest": [1, "Techie", "Life of a smartass", "We can'ts stand bugs, we write and kill...", "Writer"]
+  },
+  "testRoles": ["Admin", "Scientist", "Writer"]
+}

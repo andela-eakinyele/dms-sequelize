@@ -12,6 +12,7 @@
     "sequelize": "^3.13.0"
   },
   "devDependencies": {
+    "bluebird": "^3.0.6",
     "jasmine-node": "^1.14.5"
   },
   "scripts": {

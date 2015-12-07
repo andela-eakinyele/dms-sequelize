@@ -7,17 +7,23 @@ exports.createUser = function(userdata) {
   return new Promise(function(resolve, reject) {
     users.find({
       where: {
-        username: userdata.username
+        $or: {
+          username: userdata.username,
+          email: userdata.email
+        }
       }
     }).then(function(user) {
       if (user) {
         resolve("User exists", user);
       } else {
-        roles.findOrCreate({
+        roles.findOne({
           where: {
             rolename: userdata.rolename
           }
         }).then(function(role) {
+          if (!role) {
+            resolve("Role does not exist - ", userdata.rolename);
+          }
           users.create(userdata).then(function(user) {
             console.log("User created");
             resolve(user);
@@ -26,7 +32,7 @@ exports.createUser = function(userdata) {
             reject(Error(err));
           });
         }).catch(function(err) {
-          console.log("Error verifying/creating role", err);
+          console.log("Error verifying role", err);
           reject(Error(err));
         });
       }
@@ -38,7 +44,7 @@ exports.createUser = function(userdata) {
 };
 
 exports.getAllUsers = function(limit) {
-    var query = {};
+  var query = {};
   if (limit) query.limit = limit;
   return new Promise(function(resolve, reject) {
     users.findAll(query).then(function(users) {

@@ -23,7 +23,7 @@ documents.belongsToMany(roles, {
   through: Role_Docs
 });
 // check database connection
-exports.runner = function() {
+module.exports = function(_sync) {
   return new Promise(function(resolve, reject) {
     sequelize.authenticate().then(function(err) {
       if (err) {
@@ -32,7 +32,7 @@ exports.runner = function() {
       } else {
         console.log('Connection has been established successfully.');
         sequelize.sync({
-          force: false
+          force: _sync
         }).then(function() {
           console.log("Models successfully synced");
           resolve();
