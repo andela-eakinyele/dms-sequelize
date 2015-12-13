@@ -168,11 +168,11 @@ exports.getAllDocumentsByRole = function(limit, role) {
         }
       }).catch(function(err) {
         console.log("Error finding", role, err);
-            reject(Error(err));
+        reject(Error(err));
       });
     });
   });
-}
+};
 
 exports.getAllDocumentsByDate = function(limit, date) {
   var query = {

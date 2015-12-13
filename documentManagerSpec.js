@@ -13,6 +13,7 @@ function isDate(args) {
     return new Date(arg) instanceof Date;
   });
 }
+
 describe('CRUD operations in database', function() {
   var roles, users, docs, userTest;
   beforeEach(function(done) {
